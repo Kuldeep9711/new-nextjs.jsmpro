@@ -27,10 +27,9 @@ const page = async () => {
    < Filters/>
 
    <section className="flex-center mt-6 w-full flex-col sm:mt-20">
-      <h2 className='text-2xl font-semibold mb-6'>Header</h2>
+      Header
        
-      
-      <div className=" mt-12 flex w-full flex-wrap justify-center gap-16 sm:justify-start">
+      <div className="mt-12 flex w-full flex-wrap justify-center gap-16">
          {resources && resources.length > 0 ? (
             resources.map((resource: any) => (
              <ResourceCard 
@@ -39,7 +38,7 @@ const page = async () => {
               id={resource._id}
               image={resource.image}
               downloadNumber={resource.views}
-              slug={resource._id}
+              
               /> 
             ))
           ): (
