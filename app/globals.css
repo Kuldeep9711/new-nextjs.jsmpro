@@ -1,0 +1,55 @@
+ @import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-black-100: #0d1117;
+  --color-black-200: #161b22;
+  --color-black-400: #1e252e;
+  --color-white-100: #f0f6fc;
+  --color-white-400: #8b949e;
+
+  /* Background Image - Matches your sidebar filename */
+  --background-image-banner: url('/jsm_resources_banner.svg');
+  
+  /* Fonts */
+  --font-poppins: "Poppins", sans-serif;
+}
+
+@layer utilities {
+
+
+  .gradient_blue-purple {
+    background: linear-gradient(90deg, #4ca5ff 0%, #b573f8 100%);
+  }
+
+  /* Banner Utility */
+  .bg-banner {
+    background-image: var(--background-image-banner);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  /* Layout Utilities */
+  .flex-center { @apply flex justify-center items-center; }
+  .flex-between { @apply flex justify-between items-center; }
+  .nav-padding { @apply pt-24.5; }
+
+  /* Typography */
+  .text-gradient_blue-purple {
+    background: linear-gradient(90deg, #4ca5ff 0%, #b573f8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .heading1 { @apply text-[64px] leading-[67.2px] font-bold; }
+  .heading2 { @apply text-[48px] leading-[50.4px] font-bold; }
+  .body-text { @apply text-[16px] leading-5.5 font-normal; }
+}
+
+/* Base Styles */
+body {
+  @apply bg-black-100 text-white font-poppins;
+  margin: 0;
+} 
