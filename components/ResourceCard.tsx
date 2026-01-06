@@ -13,6 +13,7 @@ interface Props {
     title: string;
     image: string;
     downloadNumber: number;
+    
    
 }
 

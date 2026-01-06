@@ -6,7 +6,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
 
-const links = ['all', 'Next 13', 'fronted', 'backend', 'fullstack' ]
+const links = ['all', 'Next 13', 'frontend', 'backend', 'fullstack' ]
 
 const Filters = () => {
   const [active, setActive] = useState('');
@@ -22,7 +22,7 @@ const Filters = () => {
 
       newUrl = formUrlQuery({
          params: searchParams.toString(),
-         key: 'category',
+         keysToRemove: ['category'],
          value: null,
         })
       } else {

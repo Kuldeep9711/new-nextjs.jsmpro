@@ -1,10 +1,8 @@
-
-
- import Header from '@/components/Header';
+import Header from '@/components/Header';
 import ResourceCard from '@/components/ResourceCard'
 import SearchForm from '@/components/SearchForm'
 import Filters from '@/components/ui/Filters'
-import { getResources } from '@/sanity/action'
+import { getResources, getResourcesPlaylist } from '@/sanity/action'
 
 export const revalidate = 900;
 
@@ -16,11 +14,12 @@ const page = async ({ searchParams }: Props) => {
   const resolvedSearchParams = await searchParams;
   
   const resources = await getResources({
-       query: '',
+       query: resolvedSearchParams?.query || '',
        category: resolvedSearchParams?.category || '',
-       page: 1,
+       page: 1
   })
 
+  const resourcePlaylist = await getResourcesPlaylist();
   
   return (
    <main className="flex-center paddings mx-auto w-full max-w-screen-2xl flex-col">
@@ -34,8 +33,13 @@ const page = async ({ searchParams }: Props) => {
     
    < Filters/>
 
-   <section className="flex-center mt-6 w-full flex-col sm:mt-20">
-      <Header />
+   {(resolvedSearchParams?.query || resolvedSearchParams?.category) && (
+          <section className="flex-center mt-6 w-full flex-col sm:mt-20">
+      <Header 
+          title="Resources"
+          query={resolvedSearchParams?.query || ''}
+          category={resolvedSearchParams?.category || ''}
+      />
        
       <div className="mt-12 flex w-full flex-wrap justify-center gap-16">
          {resources && resources.length > 0 ? (
@@ -59,10 +63,30 @@ const page = async ({ searchParams }: Props) => {
 
 
    </section> 
+   )}
+
+    {resourcePlaylist.map((item: any) => (
+      <section key={item._id} className="flex-center mt-6 w-full flex- ol sm:mt-20">
+         <h1 className="heading3 self-start text-white-800">
+          {item.title}
+         </h1>
+         <div className="mt-12 flex w-full flex-wrap justify-center gap-16 sm:justify-start">
+             {item.resources.map((resource: any) => (
+             <ResourceCard 
+               key={resource._id} 
+              title={resource.title}
+              id={resource._id}
+              image={resource.image}
+              downloadNumber={resource.views}
+              /> 
+            ))}
+         </div>
+      </section>
+    ))}
+          
   </main> 
   )
 }
 
 export default page  
 
-//

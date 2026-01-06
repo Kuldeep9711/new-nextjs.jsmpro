@@ -45,6 +45,7 @@
 
   .heading1 { @apply text-[64px] leading-[67.2px] font-bold; }
   .heading2 { @apply text-[48px] leading-[50.4px] font-bold; }
+  .heading3 { @apply text-[28px] sm:leading-[33.6px] leading-10 tracking-[0.25%]; }
   .body-text { @apply text-[16px] leading-5.5 font-normal; }
 }
 

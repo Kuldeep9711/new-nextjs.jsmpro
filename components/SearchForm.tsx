@@ -1,4 +1,4 @@
-"use client"
+ "use client"
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
@@ -20,10 +20,15 @@ const SearchForm = () => {
      let newUrl = '';
 
      if(search) {
-      const newUrl = formUrlQuery({
+       newUrl = formUrlQuery({
         params: searchParams.toString(),
         key: 'query',
         value: search
+      })
+     } else {
+      newUrl = formUrlQuery({
+        params: searchParams.toString(),
+        keysToRemove: ['query']
       })
      }
 

@@ -21,25 +21,35 @@ export function buildQuery(params: BuildQueryParams) {
 
   // Calculate pagination limits
   const offset = (page - 1) * perPage;
-  const limit = perPage;
+  const endIndex = offset + perPage;
+ // const limit = perPage;
 
   return conditions.length > 1
     ? `${conditions[0]} && (${conditions
         .slice(1)
-        .join(" && ")})][${offset}...${limit}]`
-    : `${conditions[0]}][${offset}...${limit}]`;
+        .join(" && ")})][${offset}...${endIndex}]`
+    : `${conditions[0]}][${offset}...${endIndex}]`;
 }
 
 interface UrlQueryParams {
   params: string;
-  key: string;
-  value: string | null;
+  key?: string;
+  value?: string | null;
+  keysToRemove?: string[];
 }
 
-export function formUrlQuery({ params, key, value }: UrlQueryParams) {
+export function formUrlQuery({ params, key, value, keysToRemove }: UrlQueryParams) {
   const currentUrl = qs.parse(params);
 
-  currentUrl[key] = value;
+    if(keysToRemove) {
+      keysToRemove.forEach((keyToRemove) => {
+        delete currentUrl[keyToRemove]
+      })
+    } else if(key && value) {
+       currentUrl[key] = value;
+    }
+
+  
 
   return qs.stringifyUrl(
    { url: window.location.pathname, query: currentUrl },
