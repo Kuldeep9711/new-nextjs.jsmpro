@@ -8,11 +8,9 @@ interface GetResourcesParams {
   page: string;
 }
 
-export const getResources = async ({
-  query,
-  category,
-  page,
-}: GetResourcesParams) => {
+export const getResources = async (params: GetResourcesParams) => {
+  const { query, category, page } = params;
+
   try {
     const resources = await readClient.fetch(
       groq`${buildQuery({
@@ -33,9 +31,8 @@ export const getResources = async ({
 
     //console.log("SANITY RESOURCES 👉", resources);
 
-    return resources ?? [];
+    return resources ;
   } catch (error) {
-    console.error("SANITY ERROR 👉", error);
-    return [];
+    console.error(error);
   }
 };

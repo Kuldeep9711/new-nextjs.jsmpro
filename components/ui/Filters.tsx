@@ -1,6 +1,7 @@
 "use client"
 
 import { formUrlQuery } from "@/sanity/utils";
+import { FastForward } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -10,6 +11,7 @@ const links = ['all', 'Next 13', 'fronted', 'backend', 'fullstack' ]
 const Filters = () => {
   const [active, setActive] = useState('');
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const handleFilter = (link: string) => {
     let newUrl = '';
@@ -32,9 +34,10 @@ const Filters = () => {
              value: link.toLocaleLowerCase(),
             })
            }
+           router.push(newUrl, { scroll: false });
           }
   
-
+ 
   return (
    <ul className="text-white-800 body-text no-scrollbar flex w-full max-w-full gap-2 overflow-auto py-12 sm:max-w-2xl">
     {links.map((link) => (

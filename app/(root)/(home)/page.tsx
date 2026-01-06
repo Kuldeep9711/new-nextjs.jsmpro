@@ -9,14 +9,15 @@ import { getResources } from '@/sanity/action'
 export const revalidate = 900;
 
 interface Props {
-  searchParams: { [key: string]: string | undefined }
+  searchParams: { [key: string]: string |  undefined }
 }
 
 const page = async ({ searchParams }: Props) => {
-  console.log(searchParams)
+  const resolvedSearchParams = await searchParams;
+  
   const resources = await getResources({
        query: '',
-       category: '',
+       category: resolvedSearchParams?.category || '',
        page: 1,
   })
 

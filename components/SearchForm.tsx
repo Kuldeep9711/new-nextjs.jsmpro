@@ -1,12 +1,38 @@
 "use client"
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Input } from './ui/input'
+import { formUrlQuery } from '@/sanity/utils'
+import { useRouter,usePathname, useSearchParams } from 'next/navigation'
+
 
 
 const SearchForm = () => {
+   const searchParams = useSearchParams();
+   const router = useRouter();
+   const pathname = usePathname();
+
    const [search, setSearch] = useState("");
+
+   useEffect(() => {
+    const delayDebouncefn = setTimeout(() => {
+     let newUrl = '';
+
+     if(search) {
+      const newUrl = formUrlQuery({
+        params: searchParams.toString(),
+        key: 'query',
+        value: search
+      })
+     }
+
+     router.push(newUrl, { scroll: false });
+    }, 300)
+
+    return () => clearTimeout(delayDebouncefn)
+      }, [search])
+
   
    return (
    <form className="flex-center mx-auto mt-10 w-full sm:-mt-10 sm:px-5"> 
