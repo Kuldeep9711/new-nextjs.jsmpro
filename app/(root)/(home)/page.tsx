@@ -11,7 +11,7 @@ interface Props {
 }
 
 const page = async ({ searchParams }: Props) => {
-  const resolvedSearchParams = await searchParams;
+  const resolvedSearchParams =  await searchParams;
   
   const resources = await getResources({
        query: resolvedSearchParams?.query || '',
@@ -20,6 +20,8 @@ const page = async ({ searchParams }: Props) => {
   })
 
   const resourcePlaylist = await getResourcesPlaylist();
+
+  console.log(resourcePlaylist);
   
   return (
    <main className="flex-center paddings mx-auto w-full max-w-screen-2xl flex-col">
@@ -43,14 +45,14 @@ const page = async ({ searchParams }: Props) => {
        
       <div className="mt-12 flex w-full flex-wrap justify-center gap-16">
          {resources && resources.length > 0 ? (
-            resources.map((resource: any) => (
+            resources.map((resource: any, index: number) => (
              <ResourceCard 
-               key={resource._id}
+               key={resource._id ?? `resource-${index}`}
               title={resource.title}
               id={resource._id}
               image={resource.image}
               downloadNumber={resource.views}
-              
+              downloadLink={resource.downloadLink}
               /> 
             ))
           ): (
@@ -65,19 +67,22 @@ const page = async ({ searchParams }: Props) => {
    </section> 
    )}
 
-    {resourcePlaylist.map((item: any) => (
-      <section key={item._id} className="flex-center mt-6 w-full flex- ol sm:mt-20">
+    {resourcePlaylist?.map((item: any, itemIndex: number) => (
+      <section
+       key={item._id ??  `playlist-${itemIndex}`}
+        className="flex-center mt-6 w-full flex-col sm:mt-20">
          <h1 className="heading3 self-start text-white-800">
           {item.title}
          </h1>
          <div className="mt-12 flex w-full flex-wrap justify-center gap-16 sm:justify-start">
-             {item.resources.map((resource: any) => (
+             {item.resources?.map((resource: any, resIndex: number) => (
              <ResourceCard 
-               key={resource._id} 
+               key={resource._id ?? `${item._id}-${resIndex}`} 
               title={resource.title}
               id={resource._id}
               image={resource.image}
               downloadNumber={resource.views}
+              downloadLink={resource.downloadLink}
               /> 
             ))}
          </div>
