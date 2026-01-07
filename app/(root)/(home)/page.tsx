@@ -19,9 +19,13 @@ const page = async ({ searchParams }: Props) => {
        page: 1
   })
 
-  const resourcePlaylist = await getResourcesPlaylist();
+  // ADD THIS LOG:
+console.log("FIRST RESOURCE DATA:", JSON.stringify(resources[0], null, 2));
 
-  console.log(resourcePlaylist);
+  const resourcePlaylist = await getResourcesPlaylist();
+   
+
+ // console.log(resourcePlaylist);
   
   return (
    <main className="flex-center paddings mx-auto w-full max-w-screen-2xl flex-col">

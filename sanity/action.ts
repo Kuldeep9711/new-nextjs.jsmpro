@@ -5,7 +5,7 @@ import { buildQuery } from "./utils";
 interface GetResourcesParams {
   query: string;
   category: string;
-  page: string;
+  page: number;
 }
 
 export const getResourcesPlaylist = async () => {
@@ -16,7 +16,9 @@ export const getResourcesPlaylist = async () => {
         _id,
         title,
         resources[0...6]->{
-        downloadLink,
+        _id,
+        title,
+        "downloadLink": downloadlink,
         "image": poster.asset->url,
         views,
         slug,
@@ -43,11 +45,11 @@ export const getResources = async (params: GetResourcesParams) => {
         type: "resource",
         query,
         category,
-        page: parseInt(page)
+        page: page
       })}{
         _id,
         title,
-        downloadLink,
+       "downloadLink": downloadlink,
         "image": poster.asset->url,
         views,
         slug,
